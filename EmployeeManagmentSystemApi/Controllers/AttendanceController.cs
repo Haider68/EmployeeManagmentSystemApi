@@ -18,12 +18,12 @@ namespace EmployeeManagmentSystemApi.Controllers
         }
 
         // POST api/v1/attendence/check-in
-        [HttpPost("check-in")]
-        public async Task<IActionResult> CheckIn()
+        [HttpPost("check-in/{id}")]
+        public async Task<IActionResult> CheckIn(int id)
         {
             try
             {
-                var employeeId = GetCurrentUserId();
+                var employeeId = id;//GetCurrentUserId();
                 var attendance = await _attendanceService.CheckInAsync(employeeId);
                 return Ok(ApiResponse.Success("Check-in recorded successfully", new
                 {
@@ -39,12 +39,12 @@ namespace EmployeeManagmentSystemApi.Controllers
         }
 
         // POST api/v1/attendence/check-out
-        [HttpPost("check-out")]
-        public async Task<IActionResult> CheckOut()
+        [HttpPost("check-out/{id}")]
+        public async Task<IActionResult> CheckOut(int id)
         {
             try
             {
-                var employeeId = GetCurrentUserId();
+                var employeeId = id;//GetCurrentUserId();
                 var attendance = await _attendanceService.CheckOutAsync(employeeId);
                 return Ok(ApiResponse.Success("Check-out recorded successfully", new
                 {

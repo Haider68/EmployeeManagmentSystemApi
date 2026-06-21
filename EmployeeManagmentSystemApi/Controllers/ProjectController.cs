@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmployeeManagmentSystemApi.Controllers
 {
     [Route("api/v1/project")]
-    [Authorize]
+    //[Authorize]
     public class ProjectController : BaseApiController
     {
         private readonly IProjectService _projectService;
@@ -25,7 +25,7 @@ namespace EmployeeManagmentSystemApi.Controllers
             {
                 // If user is employee, pass their ID as creator; if admin, pass 0 (no FK)
                 var userType = GetCurrentUserType();
-                var creatorId = userType == "employee" ? GetCurrentUserId() : 0;
+                var creatorId = userType == "admin" ? GetCurrentUserId() : 0;
 
                 // For admin, we use 0 which will fail FK unless we handle it
                 // Use the first available employee ID as a fallback for admin creators

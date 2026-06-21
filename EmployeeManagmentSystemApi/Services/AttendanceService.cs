@@ -113,7 +113,7 @@ namespace EmployeeManagmentSystemApi.Services
         {
             var skip = (page - 1) * limit;
 
-            var query = _db.Attendances.Include(a => a.Employee).AsQueryable();
+            var query = _db.Attendances.Include(a => a.Employee).ThenInclude(x=>x.Projects).AsQueryable();
 
             if (employeeId.HasValue)
                 query = query.Where(a => a.EmployeeId == employeeId.Value);

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmployeeManagmentSystemApi.Controllers
 {
     [Route("api/v1/salary")]
-    [Authorize]
+   // [Authorize]
     public class SalaryController : BaseApiController
     {
         private readonly ISalaryService _salaryService;

@@ -73,10 +73,10 @@ namespace EmployeeManagmentSystemApi.Services
         {
             var query = _db.Employees.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(status))
+            if (!string.IsNullOrWhiteSpace(status) && status != "undefined")
                 query = query.Where(e => e.Status == status);
 
-            if (!string.IsNullOrWhiteSpace(department))
+            if (!string.IsNullOrWhiteSpace(department) && department != "undefined")
                 query = query.Where(e => e.Department == department);
 
             return await query.OrderByDescending(e => e.CreatedAt).ToListAsync();
@@ -235,7 +235,11 @@ namespace EmployeeManagmentSystemApi.Services
             foreach(var employee in employees)
             {
                 EmployeeDto employeeDto = new EmployeeDto();
+                employeeDto.Id = employee.Id;
                 employeeDto.FullName = employee.FullName;
+                employeeDto.Phone = employee.Phone;
+                employeeDto.Email = employee.Email;
+                employeeDto.ImageUrl = employee.Image;
                 employeeDto.FingerPrint = employee.FingerPrint;
                 employeeDtos.Add(employeeDto);
             }
@@ -246,6 +250,10 @@ namespace EmployeeManagmentSystemApi.Services
 }
      public class EmployeeDto
 {
+    public int Id { get; set; }
     public string FullName { get; set; }
+    public string Phone { get; set; }
+    public string Email { get; set; }
+    public string ImageUrl { get; set; }
     public string FingerPrint { get; set; }
 }

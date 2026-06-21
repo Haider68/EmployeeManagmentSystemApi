@@ -31,6 +31,12 @@ namespace EmployeeManagmentSystemApi.Services
 
             var days = dto.NumberOfDays ?? (dto.EndDate - dto.StartDate).TotalDays + 1;
 
+            if (dto.LeaveType != "sick" && dto.StartDate.Date == DateTime.Today)
+                throw new Exception("Leave request must be submitted at least 24 hours before the start date.");
+
+            if(days >= 5)
+                throw new Exception("You cannot apply for more than 5 days of leave at one time.");
+
             var leave = new LeaveRequest
             {
                 EmployeeId = employeeId,
