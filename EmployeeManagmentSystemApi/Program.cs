@@ -3,6 +3,7 @@ using System.Text;
 using EmployeeManagmentSystemApi.Data;
 using EmployeeManagmentSystemApi.Helpers;
 using EmployeeManagmentSystemApi.Interfaces;
+using EmployeeManagmentSystemApi.Options;
 using EmployeeManagmentSystemApi.Repositories;
 using EmployeeManagmentSystemApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -127,6 +128,13 @@ namespace EmployeeManagmentSystemApi
             builder.Services.AddScoped<IAttendanceService, AttendanceService>();
             builder.Services.AddScoped<ILeaveService, LeaveService>();
             builder.Services.AddScoped<ISalaryService, SalaryService>();
+
+            // OpenAI / Chat
+            builder.Services.Configure<OpenAiOptions>(builder.Configuration.GetSection(OpenAiOptions.SectionName));
+            builder.Services.AddOpenAiHttpClient();
+            builder.Services.AddScoped<IOpenAiService, OpenAiService>();
+            builder.Services.AddScoped<IDatabaseQueryService, DatabaseQueryService>();
+            builder.Services.AddScoped<IChatService, ChatService>();
 
             var app = builder.Build();
 
