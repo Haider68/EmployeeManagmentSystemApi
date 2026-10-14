@@ -23,6 +23,7 @@ namespace EmployeeManagmentSystemApi.DTOs.Employee
         public string? Phone { get; set; }
 
         public DateTime JoinDate { get; set; } = DateTime.UtcNow;
+        public DateTime ValidUntil { get; set; }
 
         public string Status { get; set; } = "active";
 

@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Hangfire;
+using EmployeeManagmentSystemApi.Jobs;
 
 namespace EmployeeManagmentSystemApi
 {
@@ -58,6 +60,24 @@ namespace EmployeeManagmentSystemApi
             // DbContext
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            ///HangFire Job
+            ///
+            ///
+            builder.Services.AddHangfire(config =>
+    config.UseSqlServerStorage(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddHangfireServer();
+
+            builder.Services.AddScoped<SubmitPersonTerminationJob>();
+
+            // Register your concrete credential-service implementation.
+            // builder.Services.AddScoped<IEmployeeCredentialService,
+            //     EmployeeCredentialService>();
+
+            ///HangFire Job End
+            ///
 
             // Prevent the JWT handler from remapping standard claim names (sub→NameIdentifier, etc.)
             // so that User.FindFirstValue("sub") works as expected in controllers.
@@ -137,6 +157,29 @@ namespace EmployeeManagmentSystemApi
             builder.Services.AddScoped<IChatService, ChatService>();
 
             var app = builder.Build();
+
+
+            /// HangFire Job
+            /// 
+            app.UseHangfireDashboard("/hangfire");
+
+            var pakistanTimeZone = TimeZoneInfo.FindSystemTimeZoneById(
+    OperatingSystem.IsWindows()
+        ? "Pakistan Standard Time"
+        : "Asia/Karachi");
+
+            RecurringJob.AddOrUpdate<SubmitPersonTerminationJob>(
+                "SubmitPersonTermination",
+                job => job.ExecuteAsync(),
+                "0,30 9-20 * * *",
+                new RecurringJobOptions
+                {
+                    TimeZone = pakistanTimeZone
+                });
+
+            /// HangFire Job End
+            /// 
+
 
             // Middleware pipeline
             if (app.Environment.IsDevelopment())

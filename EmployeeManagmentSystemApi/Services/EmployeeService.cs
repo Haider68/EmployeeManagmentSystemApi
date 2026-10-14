@@ -51,6 +51,7 @@ namespace EmployeeManagmentSystemApi.Services
                 Email = dto.Email,
                 Phone = dto.Phone,
                 JoinDate = dto.JoinDate,
+                ValidUntil = dto.ValidUntil,
                 Status = dto.Status,
                 BirthDate = dto.BirthDate,
                 Address = dto.Address,
@@ -104,6 +105,7 @@ namespace EmployeeManagmentSystemApi.Services
             if (!string.IsNullOrWhiteSpace(dto.Phone)) employee.Phone = dto.Phone;
             if (!string.IsNullOrWhiteSpace(dto.Address)) employee.Address = dto.Address;
             if (dto.JoinDate.HasValue) employee.JoinDate = dto.JoinDate.Value;
+            if (dto.ValidUntil.HasValue) employee.ValidUntil = dto.ValidUntil.Value;
             if (dto.BirthDate.HasValue) employee.BirthDate = dto.BirthDate.Value;
             if (dto.Salary.HasValue) employee.Salary = dto.Salary.Value;
             if (dto.HourlyRate.HasValue) employee.HourlyRate = dto.HourlyRate.Value;

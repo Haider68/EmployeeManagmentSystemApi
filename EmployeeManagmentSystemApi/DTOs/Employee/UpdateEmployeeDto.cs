@@ -7,6 +7,7 @@ namespace EmployeeManagmentSystemApi.DTOs.Employee
         public string? Department { get; set; }
         public string? Phone { get; set; }
         public DateTime? JoinDate { get; set; }
+        public DateTime? ValidUntil { get; set; }
         public DateTime? BirthDate { get; set; }
         public string? Address { get; set; }
         public decimal? Salary { get; set; }

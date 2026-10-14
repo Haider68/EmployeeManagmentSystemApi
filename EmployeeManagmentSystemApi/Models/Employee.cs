@@ -26,6 +26,7 @@ namespace EmployeeManagmentSystemApi.Models
         public string? Phone { get; set; }
 
         public DateTime JoinDate { get; set; }
+        public DateTime? ValidUntil { get; set; }
 
         public string Status { get; set; } = "active"; // active, onleave, remote, inactive
 
